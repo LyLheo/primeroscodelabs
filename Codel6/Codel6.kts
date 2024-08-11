@@ -1,143 +1,123 @@
-//Pares y triples
-
-// Partición de una lista de peces en agua dulce y salada
+// Divide peces en listas de agua dulce y salada
 val twoLists = fish.partition { isFreshWater(it) }
-println("freshwater: ${twoLists.first}") // Imprime la lista de peces de agua dulce
-println("saltwater: ${twoLists.second}") // Imprime la lista de peces de agua salada
+println("freshwater: ${twoLists.first}")
+println("saltwater: ${twoLists.second}")
 
-// Creación de un par (Pair) que asocia un equipo con su uso
+// Crea un par con equipo y uso
 val equipment = "fish net" to "catching fish"
-println("${equipment.first} used for ${equipment.second}") // Imprime "fish net used for catching fish"
+println("${equipment.first} used for ${equipment.second}")
 
-// Creación de un trío (Triple) con tres números
+// Crea un trío de números
 val numbers = Triple(6, 9, 42)
-println(numbers.toString()) // Imprime la representación en cadena del trío "(6, 9, 42)"
-println(numbers.toList())   // Convierte el trío en una lista y la imprime "[6, 9, 42]"
+println(numbers.toString())
+println(numbers.toList())
 
-// Creación de un par donde la primera parte es un par
+// Par anidado en otro par
 val equipment2 = ("fish net" to "catching fish") to "equipment"
-println("${equipment2.first} is ${equipment2.second}\n") // Imprime "fish net, catching fish) is equipment"
-println("${equipment2.first.second}") // Imprime "catching fish" (segunda parte del primer par)
+println("${equipment2.first} is ${equipment2.second}")
+println("${equipment2.first.second}")
 
-// Desestructuración de un par
+// Desestructura un par
 val (tool, use) = equipment
-println("$tool is used for $use") // Imprime "fish net is used for catching fish"
+println("$tool is used for $use")
 
-// Desestructuración de un trío
+// Desestructura un trío
 val (n1, n2, n3) = numbers
-println("$n1 $n2 $n3") // Imprime "6 9 42"
+println("$n1 $n2 $n3")
 
-
-//Comprehend collections
-
-// Crear una lista de números y sumar sus elementos
+// Suma los elementos de una lista de números
 val list = listOf(1, 5, 3, 4)
-println(list.sum()) // Imprime la suma de los elementos: 13
+println(list.sum())
 
-// Crear una lista de cadenas y tratar de sumar sus elementos
+// Error al intentar sumar cadenas directamente
 val list2 = listOf("a", "bbb", "cc")
-println(list2.sum()) // Error: no se puede sumar directamente cadenas
+println(list2.sum())
 
-// Sumar los elementos de la lista según la longitud de cada cadena usando sumBy
-println(list2.sumBy { it.length }) // Imprime la suma de las longitudes: 6
+// Suma las longitudes de las cadenas
+println(list2.sumBy { it.length })
 
-// Usar un iterador para recorrer la lista e imprimir los elementos
+// Itera sobre una lista de cadenas
 for (s in list2.listIterator()) {
-    println("$s ") // Imprime cada cadena seguida de un espacio: "a bbb cc"
+    println("$s ")
 }
 
-// Crear un hash map que mapea síntomas a enfermedades de peces
+// Mapea síntomas a enfermedades de peces
 val cures = hashMapOf("white spots" to "Ich", "red sores" to "hole disease")
-println(cures.get("white spots")) // Imprime "Ich"
-println(cures["red sores"]) // Imprime "hole disease"
+println(cures.get("white spots"))
+println(cures["red sores"])
 
-// Intentar recuperar un valor con una clave que no existe
-println(cures["scale loss"]) // Imprime "null"
+// Manejo de claves inexistentes en un hash map
+println(cures["scale loss"])
+println(cures.getOrDefault("bloating", "sorry, I don't know"))
+println(cures.getOrElse("bloating") { "No cure for this" })
 
-// Usar getOrDefault para manejar claves inexistentes
-println(cures.getOrDefault("bloating", "sorry, I don't know")) // Imprime "sorry, I don't know"
-
-// Usar getOrElse para ejecutar código si la clave no existe
-println(cures.getOrElse("bloating") { "No cure for this" }) // Imprime "No cure for this"
-
-// Crear un mapa mutable para inventario y modificarlo
+// Modifica un mapa mutable
 val inventory = mutableMapOf("fish net" to 1)
-inventory.put("tank scrubber", 3) // Agrega 3 scrubbers
-println(inventory.toString()) // Imprime "{fish net=1, tank scrubber=3}"
-inventory.remove("fish net") // Remueve la red de pesca
-println(inventory.toString()) // Imprime "{tank scrubber=3}"
+inventory.put("tank scrubber", 3)
+println(inventory.toString())
+inventory.remove("fish net")
+println(inventory.toString())
 
-//study constants
-
-// Declaración de una constante numérica utilizando 'const val'
-// La constante 'rocks' es evaluada en tiempo de compilación
+// Define una constante de compilación
 const val rocks = 3
 
-// Uso de 'val' para una asignación en tiempo de ejecución
-val value1 = complexFunctionCall() // Esto es válido, ya que 'val' permite la asignación durante la ejecución
+// Asigna un valor en tiempo de ejecución
+val value1 = complexFunctionCall()
 
-// Error: 'const val' no permite asignación en tiempo de ejecución
-// const val CONSTANT1 = complexFunctionCall() // Esto no es permitido
-
-// Uso de 'const val' dentro de un objeto singleton
+// Constante dentro de un objeto singleton
 object Constants {
-    const val CONSTANT2 = "object constant" // Constante en un objeto singleton
+    const val CONSTANT2 = "object constant"
 }
-val foo = Constants.CONSTANT2 // Accediendo a la constante del objeto singleton
+val foo = Constants.CONSTANT2
 
-// Creación de una clase con un objeto companion que contiene una constante
+// Clase con una constante en un companion object
 class MyClass {
     companion object {
-        const val CONSTANT3 = "constant in companion" // Constante en un companion object
+        const val CONSTANT3 = "constant in companion"
     }
 }
 
-//write extensions
-
-// Definición de una función de extensión para la clase String que verifica si contiene espacios
+// Extensión que verifica si una cadena tiene espacios
 fun String.hasSpaces(): Boolean {
-    val found = this.find { it == ' ' } // Busca si hay un espacio en la cadena
-    return found != null // Retorna true si se encuentra un espacio
+    return this.find { it == ' ' } != null
 }
-println("Does it have spaces?".hasSpaces()) // Imprime "true"
+println("Does it have spaces?".hasSpaces())
 
-// Versión simplificada de la función de extensión hasSpaces
-fun String.hasSpaces() = find { it == ' ' } != null // Retorna true si se encuentra un espacio, en una sola expresión
+// Versión simplificada de hasSpaces
+fun String.hasSpaces() = find { it == ' ' } != null
 
-// Clase AquariumPlant con una propiedad pública 'color' y una propiedad privada 'size'
+// Clase con una propiedad privada
 class AquariumPlant(val color: String, private val size: Int)
 
-// Función de extensión para AquariumPlant que verifica si el color es rojo
-fun AquariumPlant.isRed() = color == "red" // OK: la función puede acceder a la propiedad pública 'color'
+// Extensión que verifica si el color es rojo
+fun AquariumPlant.isRed() = color == "red"
 
-// Función de extensión para AquariumPlant que intenta acceder a la propiedad privada 'size' (provoca un error)
-// fun AquariumPlant.isBig() = size > 50 // ERROR: 'size' es privada y no accesible en la extensión
+// Error al acceder a una propiedad privada en una extensión
+// fun AquariumPlant.isBig() = size > 50 // ERROR
 
-// Clase derivada de AquariumPlant
+// Clase derivada con extensión de impresión
 open class AquariumPlant(val color: String, private val size: Int)
 class GreenLeafyPlant(size: Int) : AquariumPlant("green", size)
 
-// Funciones de extensión para imprimir el tipo de planta
 fun AquariumPlant.print() = println("AquariumPlant")
 fun GreenLeafyPlant.print() = println("GreenLeafyPlant")
 
-// Uso de las funciones de impresión con diferentes tipos
+// Muestra el tipo de planta
 val plant = GreenLeafyPlant(size = 10)
-plant.print() // Imprime "GreenLeafyPlant"
+plant.print()
 val aquariumPlant: AquariumPlant = plant
-aquariumPlant.print() // Imprime "AquariumPlant" debido a la resolución estática en tiempo de compilación
+aquariumPlant.print()
 
-// Agregando una propiedad de extensión a AquariumPlant para verificar si el color es verde
+// Propiedad de extensión que verifica si el color es verde
 val AquariumPlant.isGreen: Boolean
     get() = color == "green"
-println(aquariumPlant.isGreen) // Imprime true si el color es "green"
+println(aquariumPlant.isGreen)
 
-// Función de extensión con un receptor nullable
+// Extensión para manejar un objeto nulo
 fun AquariumPlant?.pull() {
-    this?.apply { // Verifica si 'this' no es nulo
-        println("removing $this") // Si no es nulo, imprime "removing [planta]"
+    this?.apply {
+        println("removing $this")
     }
 }
 val plant: AquariumPlant? = null
-plant.pull() // No imprime nada ya que 'plant' es nulo
-
+plant.pull()
